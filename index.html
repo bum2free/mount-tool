@@ -2,14 +2,31 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Mount Tool</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
-
-    <script>
-      // You can also require other files to run in this process
-      require('./index.js')
-    </script>
+    <div class = "content">
+      <table>
+        <tr>
+          <th> Destination </th>
+          <th> State </th>
+          <th> Operation </th>
+        </tr>
+        <tr v-for = "folder in folders">
+          <th>{{ folder['dest'] }}</th>
+          <th>{{ folder['state'] }}</th>
+          <th>
+            <button v-bind:disabled = "folder['state'] == 'tbd' ||
+              folder['state'] == 'mounted'">mount</button>
+            <button v-bind:disabled = "folder['state'] == 'tbd' ||
+              folder['state'] == 'unmounted'">unmount</button>
+          </th>
+        </tr>
+      </table>
+    </div>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script type="text/javascript" src="./lib/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="./lib/vue.min.js"></script>
+    <script type="text/javascript" src="./index.js"></script>
   </body>
 </html>
