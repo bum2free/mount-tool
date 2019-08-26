@@ -1,0 +1,13 @@
+{
+  "name": "mount-tool",
+  "version": "0.0.1",
+  "description": "mount folder management",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Jing",
+  "dependencies": {
+    "electron": "^6.0.4"
+  }
+}
