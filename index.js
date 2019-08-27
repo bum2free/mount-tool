@@ -1,46 +1,25 @@
+const fs = require('fs')
 const {exec} = require('child_process')
-
-let folders = [
-{
-  src: '192.168.1.10:/Videos',
-  dest: '/media/eric-nas-ro/Videos',
-  options: ['ro'],
-  state: 'tbd'
-},
-{
-  src: '192.168.1.10:/Child-Multimedia-2',
-  dest: '/media/eric-nas-ro/Child-Multimedia',
-  options: ['ro'],
-  state: 'tbd'
-},
-{
-  src: '192.168.1.10:/Music-Uncompress',
-  dest: '/media/eric-nas-ro/Music-Uncompress',
-  options: ['ro'],
-  state: 'tbd'
-},
-{
-  src: '192.168.1.10:/git-repositories',
-  dest: '/media/eric-nas/git-repositories',
-  state: 'tbd'
-},
-{
-  src: '192.168.1.10:/Work',
-  dest: '/media/eric-nas/Work',
-  state: 'tbd'
-},
-]
 
 let app_data = new Vue ({
   el: 'div.content',
   data: {
-    folders: folders
+    folders: []
   }
 })
 
+function read_config(cb) {
+  fs.readFile('./config.json', (err, data) => {
+    if (err)
+      return cb(err);
+    app_data.folders = JSON.parse(data);
+    return cb()
+  })
+}
+
 function refresh_mount_state()
 {
-  for (let folder of folders) {
+  for (let folder of app_data.folders) {
     let cmd = 'mountpoint ' + folder['dest'];
     exec(cmd, (err) => {
       if (err)
@@ -56,5 +35,17 @@ function h_mount_folder(folder)
 }
 
 $(document).ready(() => {
-  refresh_mount_state()
+  new Promise((resolve, reject) => {
+    read_config((err) => {
+      if (err)
+        return reject(err);
+      return resolve()
+    })
+  })
+  .then(resolve => {
+    refresh_mount_state()
+  })
+  .catch(e => {
+    console.log("Initialization err: " + e)
+  })
 })
