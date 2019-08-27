@@ -17,9 +17,13 @@
           <th>{{ folder['state'] }}</th>
           <th>
             <button v-bind:disabled = "folder['state'] == 'tbd' ||
-              folder['state'] == 'mounted'">mount</button>
+              folder['state'] == 'mounted'"
+              @click = "h_mount_folder(folder)"
+              >mount</button>
             <button v-bind:disabled = "folder['state'] == 'tbd' ||
-              folder['state'] == 'unmounted'">unmount</button>
+              folder['state'] == 'unmounted'"
+              @click = "h_umount_folder(folder)"
+              >unmount</button>
           </th>
         </tr>
       </table>
