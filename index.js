@@ -16,7 +16,11 @@ function read_config(cb) {
     if (err)
       return cb(err);
     let config_data = JSON.parse(data)
-    app_data.folders = config_data['folders'];
+    let folders = config_data['folders']
+    for (let folder of folders) {
+      folder['state'] = 'tbd'
+    }
+    app_data.folders = folders;
     app_data.password = config_data['password'];
     return cb()
   })
