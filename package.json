@@ -4,10 +4,20 @@
   "description": "mount folder management",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder -l"
+  },
+  "build" : {
+    "appId": "mount-tool",
+    "linux": {
+      "target": [
+        "AppImage"
+      ]
+    }
   },
   "author": "Jing",
-  "dependencies": {
-    "electron": "^6.0.4"
+  "devDependencies": {
+    "electron": "^6.0.4",
+    "electron-builder": "^21.2.0"
   }
 }
